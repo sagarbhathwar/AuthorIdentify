@@ -5,7 +5,6 @@ from copy import deepcopy
 import numpy as np
 import nltk
 
-
 class LangaugeModel:
 
     def __init__(self, bookname):
@@ -64,6 +63,11 @@ class LangaugeModel:
         self.smoothed_trigrams_p = {
             w: self.smoothed_trigrams_c[w] / self.smoothed_bigrams_c[w[0:2]] for w in self.smoothed_trigrams}
 
+    def printSmooth(self):
+        print(self.smoothed_unigrams_p)
+        print(self.smoothed_bigrams_p)
+        print(self.smoothed_trigrams_p)
+
     def calculate_cross_entropy_values(self):
         """
         returns the cross entorpy computer for unigram, bigram
@@ -73,3 +77,27 @@ class LangaugeModel:
         b_ce = (-1 / len(self.bigrams)) * np.sum(np.log([self.bigrams_p[w] for w in self.bigrams]))
         t_ce = (-1 / len(self.trigrams)) * np.sum(np.log([self.trigrams_p[w] for w in self.trigrams]))
         print(u_ce, b_ce, t_ce)
+
+    def classify(self, text):
+    	text_unigrams = list(text)
+    	text_bigrams = list(nltk.bigrams(text))
+    	text_trigrams = list(nltk.trigrams(text))
+
+    	text_unigram_p = reduce(lambda x,y: x*y, [self.smoothed_unigrams_p[w] for w in text_unigrams])
+    	text_bigram_p = reduce(lambda x,y: x*y, [self.smoothed_bigrams_p[w] for w in text_bigrams])
+    	text_trigram_p = reduce(lambda x,y: x*y, [self.smoothed_trigrams_p[w] for w in text_trigrams])
+    	
+    	print(text_unigram_p, text_bigram_p, text_trigram_p)
+
+    def generate_text(self, word, gram='trigram'):
+    	if(gram == 'unigram'):
+	    	cfd = nltk.ConditionalFreqDist(self.smoothed_unigrams)
+	    elif(gram == 'bigram'):
+	    	cfd = nltk.ConditionalFreqDist(self.smoothed_bigrams)
+	   	else
+	   		cfd = nltk.ConditionalFreqDist(self.smoothed_trigrams)
+
+	   	for i in range(100):
+	   		print(word)
+	   		word = cfd[word].max()
+	   		     

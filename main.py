@@ -1,4 +1,5 @@
 from langmodel import LangaugeModel
+import nltk
 
 C1 = LangaugeModel('austen-emma.txt')
 C2 = LangaugeModel('edgeworth-parents.txt')
@@ -15,3 +16,7 @@ C3.smooth(ug_set, bg_set, tg_set)
 C1.calculate_cross_entropy_values()
 C2.calculate_cross_entropy_values()
 C3.calculate_cross_entropy_values()
+
+# C2.classify(nltk.corpus.gutenberg.sents('austen-emma.txt')[100])
+
+C1.generate_text('The')
