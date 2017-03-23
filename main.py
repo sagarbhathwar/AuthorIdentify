@@ -13,9 +13,9 @@ C1.smooth(ug_set, bg_set, tg_set)
 C2.smooth(ug_set, bg_set, tg_set)
 C3.smooth(ug_set, bg_set, tg_set)
 
-# C1.calculate_cross_entropy_values()
-# C2.calculate_cross_entropy_values()
-# C3.calculate_cross_entropy_values()
+C1.calculate_cross_entropy_values()
+C2.calculate_cross_entropy_values()
+C3.calculate_cross_entropy_values()
 
 # C2.classify(nltk.corpus.gutenberg.sents('austen-emma.txt')[100])
 
